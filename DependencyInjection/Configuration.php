@@ -295,6 +295,39 @@ class Configuration implements ConfigurationInterface
                                 ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
                             ->end()
                         ->end()
+
+                        ->arrayNode('audio')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('service')->defaultValue('sonata.media.provider.audio')->end()
+                                ->scalarNode('resizer')->defaultValue(false)->end()
+                                ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
+                                ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
+                                ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
+                                ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->arrayNode('allowed_extensions')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array(
+                                        'wav', // wav
+                                        'aiff', 'aif', 'aifc', // aif
+                                        'mp3', // mp3
+                                        'm4a', 'm4b', 'm4p', 'm4v', 'm4r', '3gp', 'mp4', 'aac', // AAC-LC
+                                        // HE-AAC
+                                    ))
+                                ->end()
+                                ->arrayNode('allowed_mime_types')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array(
+                                        'audio/wav', 'audio/x-wav', 'audio/vnd.wave', 'audio/wave', // wav
+                                        'audio/x-aif', 'audio/aiff', // aif
+                                        'audio/mpeg', 'audio/MPA', 'audio/mpa-robust', // mp3
+                                        'audio/aac', 'audio/aacp', 'audio/mp4', 'audio/MP4A-LATM', 'audio/mpeg4-generic', // AAC-LC
+                                        'audio/3gpp', 'audio/3gpp2', // AAC-LC or HE-AAC
+                                        'audio/aacp', // HE-AAC
+                                    ))
+                                ->end()
+                            ->end()
+                        ->end()
                     ->end()
                 ->end()
             ->end()
