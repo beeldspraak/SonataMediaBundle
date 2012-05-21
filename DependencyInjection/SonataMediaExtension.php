@@ -136,6 +136,11 @@ class SonataMediaExtension extends Extension
             ->replaceArgument(5, $config['providers']['file']['allowed_extensions'])
             ->replaceArgument(6, $config['providers']['file']['allowed_mime_types'])
         ;
+
+        $container->getDefinition('sonata.media.provider.audio')
+            ->replaceArgument(5, $config['providers']['audio']['allowed_extensions'])
+            ->replaceArgument(6, $config['providers']['audio']['allowed_mime_types'])
+        ;
     }
 
     /**
