@@ -327,6 +327,35 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+
+                        ->arrayNode('video')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('service')->defaultValue('sonata.media.provider.video')->end()
+                                ->scalarNode('resizer')->defaultValue(false)->end()
+                                ->scalarNode('filesystem')->defaultValue('sonata.media.filesystem.local')->end()
+                                ->scalarNode('cdn')->defaultValue('sonata.media.cdn.server')->end()
+                                ->scalarNode('generator')->defaultValue('sonata.media.generator.default')->end()
+                                ->scalarNode('thumbnail')->defaultValue('sonata.media.thumbnail.format')->end()
+                                ->arrayNode('allowed_extensions')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array(
+                                        'mp4', 'm4a', 'm4p', 'm4b', 'm4r', 'm4v', // MP4
+                                        'webm', // WebM
+                                        'ogv', 'ogx', 'ogg', 'spx', // Ogg
+                                    ))
+                                ->end()
+                                ->arrayNode('allowed_mime_types')
+                                    ->prototype('scalar')->end()
+                                    ->defaultValue(array(
+                                        'video/mp4', // MP4
+                                        'video/webm', // WebM
+                                        'video/ogg', // Ogg
+                                    ))
+                                ->end()
+                            ->end()
+                        ->end()
+
                     ->end()
                 ->end()
             ->end()
